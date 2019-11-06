@@ -116,24 +116,90 @@ Refactor GroceryList to dynamically render an array of groceryItems, utilizing y
 Refactor GroceryListItem to be a class component
 */
 
+// class GroceryListItem extends React.Component {
+//   constructor(props) {
+//     super(props)
+//   }
+//   render() {
+//     return (
+//       <li>{this.props.product}</li>
+//     );
+//   }
+// }
+
+// var GroceryList = (props) => (
+//   <ul>
+//     {props.groceries.map((product) =>
+//   <GroceryListItem product={product} />
+//   )}
+//   </ul>
+// )
+
+// var App = () => (
+//   <div>
+//     <h2>My Grocery List</h2>
+//     <GroceryList groceries={['Cucumber', 'Salmon', 'Asparagus']} />
+//   </div>
+// );
+
+// ReactDOM.render(<App />, document.getElementById("app"));
+
+
+/*
+5. Handling User Events | Making applications interactive with state | State
+
+Make it so that when your mouse hovers over a <li> of a GroceryListItem that it turns bold
+*/
+
 class GroceryListItem extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
+
+    this.state = {
+      hovered: false,
+      mouseouted: true
+    };
+
+    this.onListItemHover = this.onListItemHover.bind(this)
+    this.onListItemMouseOut = this.onListItemMouseOut.bind(this)
   }
+
+  onListItemHover() {
+    this.setState({
+      hovered: !this.state.hovered,
+      mouseouted: !this.state.mouseouted
+    });
+  }
+
+  onListItemMouseOut() {
+    this.setState({
+      mouseouted: !this.state.mouseouted,
+      hovered: !this.state.hovered
+    })
+  }
+
   render() {
+    var style = {
+      fontWeight: this.state.hovered ? 'bold' : 'normal',
+      fontWeight: this.state.mouseouted ? 'normal' : 'bold'
+    };
+
     return (
-      <li>{this.props.product}</li>
+      <li style={style}
+      onMouseEnter={this.onListItemHover}
+      onMouseLeave={this.onListItemMouseOut}>
+      {this.props.product}</li>
     );
   }
-}
+};
 
 var GroceryList = (props) => (
   <ul>
     {props.groceries.map((product) =>
-  <GroceryListItem product={product} />
-  )}
+      <GroceryListItem product={product} />
+    )}
   </ul>
-)
+);
 
 var App = () => (
   <div>
@@ -143,10 +209,3 @@ var App = () => (
 );
 
 ReactDOM.render(<App />, document.getElementById("app"));
-
-
-/*
-5. Handling User Events | Making applications interactive with state | State
-
-Make it so that when your mouse hovers over a <li> of a GroceryListItem that it turns bold
-*/
