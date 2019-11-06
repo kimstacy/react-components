@@ -63,21 +63,90 @@ Create a reusable GroceryListItem component that dynamically renders a given gro
 Refactor GroceryList to dynamically render an array of groceryItems, utilizing your new GroceryListItem component
 */
 
-
 // Create a reusable component GroceryListItem
-var GroceryListItem = (props) => (
-  <ul>
-    <li>{props.groceries[0]}</li>
-    <li>{props.groceries[1]}</li>
-    <li>{props.groceries[2]}</li>
-  </ul>
-);
+// var GroceryListItem = (props) => (
+//   <ul>
+//     <li>{props.groceries[0]}</li>
+//     <li>{props.groceries[1]}</li>
+//     <li>{props.groceries[2]}</li>
+//   </ul>
+// );
 
-var App = () => ( //GroceryList
+// var App = () => ( //GroceryList
+//   <div>
+//     <h2>My Grocery List</h2>
+//     <GroceryListItem groceries={['Apples', 'Tea', 'Oranges']} />
+//   </div>
+// );
+
+// ReactDOM.render(<App />, document.getElementById("app"));
+
+
+/* Add an onListItemClick console log */
+
+// var GroceryListItem = (props) => {
+
+//   var clickHandler = (event) => {
+//     event.preventDefault();
+//     alert('NO COPYING LMAO');
+//   }
+
+//   return (
+//     <ul>
+//       <li onCopy={clickHandler}>{props.groceries[0]}</li>
+//       <li>{props.groceries[1]}</li>
+//       <li>{props.groceries[2]}</li>
+//     </ul>
+//   );
+// };
+
+// var App = () => ( //GroceryList
+//   <div>
+//     <h2>My Grocery List</h2>
+//     <GroceryListItem groceries={['Apples', 'Tea', 'Oranges']} />
+//   </div>
+// );
+
+// ReactDOM.render(<App />, document.getElementById("app"));
+
+
+/*
+4. Handling User Events | Making applications interactive with state | Class components
+
+Refactor GroceryListItem to be a class component
+*/
+
+class GroceryListItem extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+  render() {
+    return (
+      <li>{this.props.product}</li>
+    );
+  }
+}
+
+var GroceryList = (props) => (
+  <ul>
+    {props.groceries.map((product) =>
+  <GroceryListItem product={product} />
+  )}
+  </ul>
+)
+
+var App = () => (
   <div>
     <h2>My Grocery List</h2>
-    <GroceryListItem groceries={['Apples', 'Tea', 'Oranges']} />
+    <GroceryList groceries={['Cucumber', 'Salmon', 'Asparagus']} />
   </div>
 );
 
 ReactDOM.render(<App />, document.getElementById("app"));
+
+
+/*
+5. Handling User Events | Making applications interactive with state | State
+
+Make it so that when your mouse hovers over a <li> of a GroceryListItem that it turns bold
+*/
